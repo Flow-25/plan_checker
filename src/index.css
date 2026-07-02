@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+/* Enable class-based dark mode: `dark:` utilities apply under a `.dark` root. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  /* Render native controls (checkboxes, time pickers, scrollbars) dark. */
+  .dark {
+    color-scheme: dark;
+  }
+  /* Give text fields a dark surface without annotating every input. */
+  .dark input:not([type="checkbox"]):not([type="radio"]),
+  .dark select,
+  .dark textarea {
+    background-color: #0f172a; /* slate-900 */
+    color: #f1f5f9; /* slate-100 */
+    border-color: #475569; /* slate-600 */
+  }
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    color: #64748b; /* slate-500 */
+  }
+}
