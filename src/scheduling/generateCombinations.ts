@@ -7,6 +7,22 @@ import type {
   Session,
 } from "../types";
 import { anyCollision } from "./collision";
+import { toMinutes } from "../utils/time";
+
+/**
+ * A canonical string for a group's weekly time footprint (day + time + parity
+ * of each session), ignoring room/teacher. Two groups with the same footprint
+ * are interchangeable on the timetable.
+ */
+export function sessionFootprint(sessions: Session[]): string {
+  return sessions
+    .map(
+      (s) =>
+        `${s.dayOfWeek}|${toMinutes(s.startTime)}|${toMinutes(s.endTime)}|${s.weekParity}`,
+    )
+    .sort()
+    .join("~");
+}
 
 export interface GenerateOptions {
   /** Stop after collecting this many valid combinations. */
@@ -51,12 +67,22 @@ function buildSlots(
     if (!course.included) continue;
     for (const type of course.componentTypes) {
       if (dropped.has(slotKey(course.id, type))) continue;
-      const options = groups
+      const all = groups
         .filter((g) => g.courseId === course.id && g.type === type)
         .map((group) => ({ group, sessions: group.sessions }));
-      if (options.length === 0) {
+      if (all.length === 0) {
         emptySlots.push({ courseId: course.id, type });
         continue;
+      }
+      // Collapse groups that occupy the same time footprint to one option, so
+      // interchangeable groups don't multiply into identical-looking plans.
+      const seen = new Set<string>();
+      const options: typeof all = [];
+      for (const opt of all) {
+        const sig = sessionFootprint(opt.sessions);
+        if (seen.has(sig)) continue;
+        seen.add(sig);
+        options.push(opt);
       }
       slots.push({ courseId: course.id, type, options });
     }

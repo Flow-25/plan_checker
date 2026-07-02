@@ -116,6 +116,36 @@ describe("generateCombinations", () => {
     expect(res.combinations).toHaveLength(1);
     expect(res.combinations[0].groupIds).toEqual(["a1"]);
   });
+
+  it("merges same-time groups instead of multiplying plans", () => {
+    // A has 2 groups at the same time; B has 3 at the same (different) time.
+    // Naively that's 2×3 = 6 plans, but they all look identical → expect 1.
+    const courses = [course("A"), course("B")];
+    const at = (day: number, start: string, end: string) =>
+      session({ dayOfWeek: day, startTime: start, endTime: end });
+    const groups = [
+      group("a1", "A", [at(1, "10:00", "12:00")]),
+      group("a2", "A", [at(1, "10:00", "12:00")]),
+      group("b1", "B", [at(2, "08:00", "10:00")]),
+      group("b2", "B", [at(2, "08:00", "10:00")]),
+      group("b3", "B", [at(2, "08:00", "10:00")]),
+    ];
+    const res = generateCombinations(courses, groups);
+    expect(res.combinations).toHaveLength(1);
+  });
+
+  it("still separates groups that differ in time", () => {
+    const courses = [course("A")];
+    const at = (day: number, start: string, end: string) =>
+      session({ dayOfWeek: day, startTime: start, endTime: end });
+    const groups = [
+      group("a1", "A", [at(1, "10:00", "12:00")]),
+      group("a2", "A", [at(1, "10:00", "12:00")]), // same as a1 → merged
+      group("a3", "A", [at(2, "10:00", "12:00")]), // different day → kept
+    ];
+    const res = generateCombinations(courses, groups);
+    expect(res.combinations).toHaveLength(2);
+  });
 });
 
 describe("ranking", () => {

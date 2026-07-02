@@ -2,6 +2,7 @@ import type { Combination, Course, Group } from "../types";
 import { COMPONENT_LABELS } from "../types";
 import { colorByName } from "../utils/colors";
 import { DAY_SHORT, fromMinutes, toMinutes } from "../utils/time";
+import { sessionFootprint } from "../scheduling/generateCombinations";
 
 interface Props {
   combination: Combination;
@@ -20,6 +21,8 @@ interface Block {
   location?: string;
   parity: string;
   ghost: boolean; // dropped optional component, shown for reference
+  /** Labels of other groups interchangeable with this one (same time). */
+  altLabels: string[];
   // Layout, filled in per day:
   col: number;
   cols: number;
@@ -78,6 +81,18 @@ export default function ScheduleCalendarView({
   const pushGroup = (group: Group, ghost: boolean) => {
     const course = coursesById.get(group.courseId);
     if (!course) return;
+    // Groups of the same component with the identical time footprint are
+    // interchangeable — list them so the user knows the plan allows any of them.
+    const sig = sessionFootprint(group.sessions);
+    const altLabels = allGroups
+      .filter(
+        (g) =>
+          g.id !== group.id &&
+          g.courseId === group.courseId &&
+          g.type === group.type &&
+          sessionFootprint(g.sessions) === sig,
+      )
+      .map((g) => g.label);
     for (const s of group.sessions) {
       const start = toMinutes(s.startTime);
       const end = toMinutes(s.endTime);
@@ -91,6 +106,7 @@ export default function ScheduleCalendarView({
         location: s.location,
         parity: s.weekParity,
         ghost,
+        altLabels,
         col: 0,
         cols: 1,
       });
@@ -183,11 +199,18 @@ export default function ScheduleCalendarView({
                         left: `calc(${b.col * widthPct}% + 1px)`,
                         width: `calc(${widthPct}% - 2px)`,
                       }}
-                      title={`${b.course.name} — ${COMPONENT_LABELS[b.group.type]} (${b.group.label})${b.ghost ? " — optional, not scheduled" : ""}`}
+                      title={`${b.course.name} — ${COMPONENT_LABELS[b.group.type]} (${b.group.label})${
+                        b.altLabels.length
+                          ? ` — or any of: ${b.altLabels.join(", ")}`
+                          : ""
+                      }${b.ghost ? " — optional, not scheduled" : ""}`}
                     >
                       <div className="truncate font-semibold">{b.course.name}</div>
                       <div className="truncate">
                         {COMPONENT_LABELS[b.group.type]} · {b.group.label}
+                        {b.altLabels.length > 0 && (
+                          <span className="opacity-70"> +{b.altLabels.length}</span>
+                        )}
                       </div>
                       <div className="truncate opacity-80">
                         {fromMinutes(b.start)}–{fromMinutes(b.end)}
@@ -199,6 +222,14 @@ export default function ScheduleCalendarView({
                         {b.parity !== "every" && (
                           <span className="rounded bg-white/70 px-1 text-[9px] font-medium">
                             {b.parity}
+                          </span>
+                        )}
+                        {b.altLabels.length > 0 && (
+                          <span
+                            className="rounded bg-white/80 px-1 text-[9px] font-medium"
+                            title={`Interchangeable groups: ${b.group.label}, ${b.altLabels.join(", ")}`}
+                          >
+                            {b.altLabels.length + 1} groups
                           </span>
                         )}
                         {b.ghost && (
