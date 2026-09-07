@@ -2,10 +2,26 @@
 .elenya-app {
   position: relative;
   isolation: isolate;
-  background-color: #eaf0ef;
-  background-image: linear-gradient(135deg, #f7f9f5 0%, #e6efed 48%, #d6e5e7 100%);
-  background-attachment: fixed;
+  background-color: #edf2ef;
+  background-image: none;
 }
+
+.lightfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: .72;
+}
+
+.light-marks {
+  fill: #829fa1;
+  opacity: .25;
+}
+
+.light-marks circle:nth-child(3n + 2) { fill: #b49a55; opacity: .7; }
 
 .starfield {
   position: fixed;
@@ -40,6 +56,8 @@
 .dark .elenya-app {
   background: #081923;
 }
+
+.dark .lightfield { display: none; }
 
 .dark .starfield i {
   background: #dcefeb;

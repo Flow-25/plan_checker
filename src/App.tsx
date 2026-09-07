@@ -45,6 +45,34 @@ export default function App() {
       <div className="starfield" aria-hidden="true">
         {Array.from({ length: 68 }, (_, index) => <i key={index} />)}
       </div>
+      <svg className="lightfield" viewBox="0 0 1440 1000" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <radialGradient id="telperion-light" cx="0" cy="0" r="1" gradientTransform="translate(220 170) scale(680 590)" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#ffffff" stopOpacity="0.7" />
+            <stop offset="0.44" stopColor="#dcebea" stopOpacity="0.22" />
+            <stop offset="1" stopColor="#dcebea" stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id="laurelin-light" cx="0" cy="0" r="1" gradientTransform="translate(1290 870) scale(610 520)" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#f4e5b5" stopOpacity="0.27" />
+            <stop offset="0.52" stopColor="#ead9a7" stopOpacity="0.1" />
+            <stop offset="1" stopColor="#ead9a7" stopOpacity="0" />
+          </radialGradient>
+          <filter id="luminous-air" x="-15%" y="-15%" width="130%" height="130%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.003 0.005" numOctaves="2" seed="37" result="air" />
+            <feColorMatrix in="air" type="matrix" values="0 0 0 0 0.55  0 0 0 0 0.68  0 0 0 0 0.68  0 0 0 .12 0" />
+            <feGaussianBlur stdDeviation="24" />
+          </filter>
+        </defs>
+        <rect width="1440" height="1000" fill="url(#telperion-light)" />
+        <rect width="1440" height="1000" fill="url(#laurelin-light)" />
+        <rect x="-100" y="-100" width="1640" height="1200" filter="url(#luminous-air)" opacity="0.34" />
+        <g className="light-marks">
+          <circle cx="97" cy="648" r="1.4" /><circle cx="286" cy="117" r="1.1" />
+          <circle cx="534" cy="826" r="1.25" /><circle cx="789" cy="238" r="1" />
+          <circle cx="1072" cy="703" r="1.5" /><circle cx="1337" cy="153" r="1.15" />
+          <circle cx="1221" cy="927" r=".9" /><circle cx="418" cy="441" r=".85" />
+        </g>
+      </svg>
       <header className="elenya-header sticky top-0 z-10">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4">
           <div className="flex items-center gap-3">
