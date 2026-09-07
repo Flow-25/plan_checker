@@ -68,6 +68,8 @@ export function useAppData() {
         type,
         label: label.trim() || "Group",
         sessions: [],
+        excluded: false,
+        pinned: false,
       };
       setData((d) => ({ ...d, groups: [...d.groups, group] }));
       return group.id;
@@ -80,6 +82,22 @@ export function useAppData() {
       ...d,
       groups: d.groups.map((g) => (g.id === id ? { ...g, ...patch } : g)),
     }));
+  }, []);
+
+  const toggleGroupPinned = useCallback((id: string) => {
+    setData((d) => {
+      const target = d.groups.find((g) => g.id === id);
+      if (!target) return d;
+      const nextPinned = !target.pinned;
+      return {
+        ...d,
+        groups: d.groups.map((g) =>
+          g.courseId === target.courseId && g.type === target.type
+            ? { ...g, pinned: g.id === id ? nextPinned : false, excluded: g.id === id && nextPinned ? false : g.excluded }
+            : g,
+        ),
+      };
+    });
   }, []);
 
   const deleteGroup = useCallback((id: string) => {
@@ -136,6 +154,7 @@ export function useAppData() {
     deleteCourse,
     addGroup,
     updateGroup,
+    toggleGroupPinned,
     deleteGroup,
     addSession,
     updateSession,

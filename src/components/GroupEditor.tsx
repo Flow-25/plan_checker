@@ -13,7 +13,7 @@ export default function GroupEditor({ group, api }: Props) {
   const noSessions = group.sessions.length === 0;
 
   return (
-    <div className="rounded-lg border border-slate-200 dark:border-slate-700 p-3">
+    <div className={`group-editor rounded-lg border p-3 ${group.pinned ? "group-pinned" : group.excluded ? "group-excluded" : "border-slate-200 dark:border-slate-700"}`}>
       <div className="mb-2 flex items-center gap-2">
         <input
           type="text"
@@ -23,12 +23,29 @@ export default function GroupEditor({ group, api }: Props) {
           onBlur={() => api.updateGroup(group.id, { label })}
         />
         <button
+          onClick={() => api.toggleGroupPinned(group.id)}
+          className="group-action"
+          title="Use only this group for this course component"
+        >
+          {group.pinned ? "◆ Required" : "◇ Pin"}
+        </button>
+        <button
+          onClick={() => api.updateGroup(group.id, { excluded: !group.excluded, pinned: false })}
+          className="group-action"
+          title="Keep this group saved but omit it from generated plans"
+        >
+          {group.excluded ? "Restore" : "Exclude"}
+        </button>
+        <button
           onClick={() => api.deleteGroup(group.id)}
           className="rounded px-2 py-1 text-xs text-slate-400 dark:text-slate-500 hover:bg-red-50 hover:text-red-600"
         >
           Delete group
         </button>
       </div>
+
+      {group.pinned && <p className="group-state">This group is required; other groups for this component will not be used.</p>}
+      {group.excluded && <p className="group-state warning">This group is excluded from planning.</p>}
 
       <div className="space-y-2">
         {group.sessions.map((s) => (

@@ -89,7 +89,6 @@ export default function HelpGuide({ open, onClose, onGoTo }: Props) {
               <div><i>1</i><span>✓ Minimize gaps <small>Less waiting between classes</small></span><b>↑ ↓</b></div>
               <div><i>2</i><span>✓ Maximize free days <small>More days with no classes</small></span><b>↑ ↓</b></div>
               <div><i>3</i><span>✓ Late starts / early finishes <small>Shorter, friendlier class days</small></span><b>↑ ↓</b></div>
-              <div className="muted"><i>4</i><span>□ Minimize class days <small>Unticked criteria are ignored</small></span><b>↑ ↓</b></div>
             </div>
             <div className="shot-note"><span>☝</span><div><b>Tick, untick, and reorder</b><p>Use the arrows to put your most important preference first. Untick anything that should not affect the ranking.</p></div></div>
           </div>
@@ -98,7 +97,6 @@ export default function HelpGuide({ open, onClose, onGoTo }: Props) {
             <article><span>☕</span><h4>Minimize gaps</h4><p>Prefers less idle time between the first and last class of each day.</p></article>
             <article><span>🌿</span><h4>Maximize free days</h4><p>Prefers more entirely class-free weekdays. Weekends count if a result uses them.</p></article>
             <article><span>🌤️</span><h4>Late starts / early finishes</h4><p>Balances starting later with finishing earlier across all class days.</p></article>
-            <article><span>🗺️</span><h4>Minimize class days</h4><p>Clusters classes onto fewer days, even if the selected days are busier.</p></article>
           </div>
 
           <div className="results-shot" aria-label="Illustration of browsing and viewing ranked plans">
@@ -122,9 +120,12 @@ export default function HelpGuide({ open, onClose, onGoTo }: Props) {
               <li><strong>Odd and even weeks:</strong> classes at the same time do not clash when one occurs only on odd weeks and the other only on even weeks.</li>
               <li><strong>Several meetings per group:</strong> one group can meet multiple times during the week.</li>
               <li><strong>Equivalent groups:</strong> groups with identical times are shown together instead of creating duplicate-looking plans.</li>
+              <li><strong>Required or excluded groups:</strong> pin the group you must attend, or exclude an option without deleting it.</li>
               <li><strong>Optional components:</strong> if no complete plan works, the planner can omit the smallest possible set of components you marked optional.</li>
               <li><strong>Temporary exclusion:</strong> turn off “Include” to generate plans without an entire course, without deleting it.</li>
               <li><strong>Rooms and weekends:</strong> locations appear on the calendar, and Saturday/Sunday are displayed whenever needed.</li>
+              <li><strong>Odd/even views:</strong> switch the calendar between alternating weeks instead of mentally combining them.</li>
+              <li><strong>Portable backups:</strong> export your data as JSON and restore it on this or another device.</li>
             </ul>
           </div>
         </div>

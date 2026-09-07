@@ -6,8 +6,9 @@ import type {
   DroppedSlot,
   Session,
 } from "../types";
-import { anyCollision } from "./collision";
+import { anyCollision, sessionsCollide } from "./collision";
 import { toMinutes } from "../utils/time";
+import { isValidTimeRange } from "../utils/time";
 
 /**
  * A canonical string for a group's weekly time footprint (day + time + parity
@@ -49,6 +50,15 @@ interface Slot {
 
 const slotKey = (courseId: string, type: ComponentType) => `${courseId}|${type}`;
 
+function hasInternalCollision(sessions: Session[]): boolean {
+  for (let i = 0; i < sessions.length; i++) {
+    for (let j = i + 1; j < sessions.length; j++) {
+      if (sessionsCollide(sessions[i], sessions[j])) return true;
+    }
+  }
+  return false;
+}
+
 /**
  * Build the choice slots for the given courses: one slot per required
  * component type per course. Any (course, component) slot in `droppedSlots`
@@ -67,8 +77,24 @@ function buildSlots(
     if (!course.included) continue;
     for (const type of course.componentTypes) {
       if (dropped.has(slotKey(course.id, type))) continue;
-      const all = groups
-        .filter((g) => g.courseId === course.id && g.type === type)
+      const candidates = groups.filter(
+        (g) => g.courseId === course.id && g.type === type && !g.excluded,
+      );
+      const pinned = candidates.filter((g) => g.pinned);
+      const allowed = pinned.length > 0 ? pinned : candidates;
+      const all = allowed
+        .filter(
+          (g) =>
+            g.sessions.length > 0 &&
+            g.sessions.every(
+              (s) =>
+                Number.isInteger(s.dayOfWeek) &&
+                s.dayOfWeek >= 1 &&
+                s.dayOfWeek <= 7 &&
+                ["every", "odd", "even"].includes(s.weekParity) &&
+                isValidTimeRange(s.startTime, s.endTime),
+            ) && !hasInternalCollision(g.sessions),
+        )
         .map((group) => ({ group, sessions: group.sessions }));
       if (all.length === 0) {
         emptySlots.push({ courseId: course.id, type });

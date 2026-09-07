@@ -47,7 +47,11 @@ export function normalize(input: unknown): AppData {
         droppableComponents,
       };
     }),
-    groups,
+    groups: groups.map((group) => ({
+      ...group,
+      excluded: group.excluded ?? false,
+      pinned: group.pinned ?? false,
+    })),
   };
 }
 
@@ -59,7 +63,7 @@ export function exportToFile(data: AppData): void {
   const a = document.createElement("a");
   a.href = url;
   const stamp = new Date().toISOString().slice(0, 10);
-  a.download = `schedule-planner-${stamp}.json`;
+  a.download = `elenya-backup-${stamp}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

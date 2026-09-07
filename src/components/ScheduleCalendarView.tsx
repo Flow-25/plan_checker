@@ -76,6 +76,7 @@ export default function ScheduleCalendarView({
   coursesById,
   allGroups,
 }: Props) {
+  const [week, setWeek] = useState<"odd" | "even">("odd");
   const blocks: Block[] = [];
 
   const pushGroup = (group: Group, ghost: boolean) => {
@@ -131,11 +132,17 @@ export default function ScheduleCalendarView({
     return <p className="text-sm text-slate-400 dark:text-slate-500">No sessions to display.</p>;
   }
 
-  const usesWeekend = blocks.some((b) => b.day >= 6);
+  const hasAlternating = blocks.some((block) => block.parity !== "every");
+  const displayedBlocks = hasAlternating
+    ? blocks.filter((block) => block.parity === "every" || block.parity === week)
+    : blocks;
+  const boundsSource = displayedBlocks.length > 0 ? displayedBlocks : blocks;
+
+  const usesWeekend = boundsSource.some((b) => b.day >= 6);
   const days = usesWeekend ? [1, 2, 3, 4, 5, 6, 7] : [1, 2, 3, 4, 5];
 
-  let minStart = Math.min(...blocks.map((b) => b.start));
-  let maxEnd = Math.max(...blocks.map((b) => b.end));
+  let minStart = Math.min(...boundsSource.map((b) => b.start));
+  let maxEnd = Math.max(...boundsSource.map((b) => b.end));
   minStart = Math.floor(minStart / 60) * 60;
   maxEnd = Math.ceil(maxEnd / 60) * 60;
   const height = (maxEnd - minStart) * PX_PER_MIN;
@@ -144,12 +151,20 @@ export default function ScheduleCalendarView({
   for (let m = minStart; m <= maxEnd; m += 60) hourLines.push(m);
 
   // Lay out overlaps per day.
-  for (const day of days) layoutDay(blocks.filter((b) => b.day === day));
+  for (const day of days) layoutDay(displayedBlocks.filter((b) => b.day === day));
 
   const hasGhosts = blocks.some((b) => b.ghost);
 
   return (
     <div className="overflow-x-auto">
+      {hasAlternating && (
+        <div className="week-switch" aria-label="Week parity">
+          <span>View week</span>
+          <button className={week === "odd" ? "active" : ""} onClick={() => setWeek("odd")}>Odd</button>
+          <button className={week === "even" ? "active" : ""} onClick={() => setWeek("even")}>Even</button>
+        </div>
+      )}
+      {displayedBlocks.length === 0 && <p className="empty-week-note">No classes occur in this week.</p>}
       <div className="flex min-w-[680px] gap-1.5">
         {/* Time axis */}
         <div className="relative w-11 shrink-0" style={{ height: height + 24 }}>
@@ -182,7 +197,7 @@ export default function ScheduleCalendarView({
                   style={{ top: (m - minStart) * PX_PER_MIN }}
                 />
               ))}
-              {blocks
+              {displayedBlocks
                 .filter((b) => b.day === day)
                 .map((b, i) => {
                   const color = colorByName(b.course.color);
@@ -257,3 +272,4 @@ export default function ScheduleCalendarView({
     </div>
   );
 }
+import { useState } from "react";

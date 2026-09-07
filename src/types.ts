@@ -28,6 +28,10 @@ export interface Group {
   type: ComponentType;
   label: string;
   sessions: Session[];
+  /** Excluded groups remain saved but are not considered by the planner. */
+  excluded?: boolean;
+  /** A pinned group is the only allowed option for its course/component slot. */
+  pinned?: boolean;
 }
 
 export interface Course {
@@ -54,14 +58,12 @@ export interface AppData {
 export type CriterionKey =
   | "minGaps"
   | "maxFreeDays"
-  | "lateStartEarlyFinish"
-  | "minDays";
+  | "lateStartEarlyFinish";
 
 export const CRITERION_LABELS: Record<CriterionKey, string> = {
   minGaps: "Minimize gaps between classes",
   maxFreeDays: "Maximize free days",
-  lateStartEarlyFinish: "Prefer late starts / early finishes",
-  minDays: "Minimize number of class days",
+  lateStartEarlyFinish: "Prefer late starts and early finishes",
 };
 
 export interface CriterionSetting {
@@ -76,7 +78,6 @@ export const DEFAULT_CRITERIA: CriteriaOrder = [
   { key: "minGaps", enabled: true },
   { key: "maxFreeDays", enabled: true },
   { key: "lateStartEarlyFinish", enabled: true },
-  { key: "minDays", enabled: true },
 ];
 
 /** A (course, component) slot that was left out of a plan. */

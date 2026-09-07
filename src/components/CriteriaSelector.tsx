@@ -28,7 +28,7 @@ export default function CriteriaSelector({ criteria, onChange }: Props) {
         What makes a good week?
       </h3>
       <p className="mb-3 text-xs text-slate-500 dark:text-slate-400">
-        Tick what matters, then move your strongest preference to the top.
+        Tick what matters, then move your strongest preference to the top. Alternating classes are scored across odd and even weeks.
       </p>
       <ol className="space-y-2">
         {criteria.map((c, i) => (

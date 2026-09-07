@@ -15,7 +15,8 @@ function loadCriteria(): CriteriaOrder {
   try {
     const raw = localStorage.getItem(CRITERIA_KEY);
     if (!raw) return DEFAULT_CRITERIA;
-    const parsed = JSON.parse(raw) as CriteriaOrder;
+    const known = new Set(DEFAULT_CRITERIA.map((criterion) => criterion.key));
+    const parsed = (JSON.parse(raw) as CriteriaOrder).filter((criterion) => known.has(criterion.key));
     // Ensure all known criteria are present (in case new ones were added).
     const keys = new Set(parsed.map((c) => c.key));
     const merged = [...parsed];
@@ -40,27 +41,27 @@ export default function App() {
   }, [criteria]);
 
   return (
-    <div className="shire-app elenya-app min-h-screen text-slate-900 dark:text-slate-100">
+    <div className="elenya-app min-h-screen text-slate-900 dark:text-slate-100">
       <div className="starfield" aria-hidden="true">
         {Array.from({ length: 68 }, (_, index) => <i key={index} />)}
       </div>
-      <header className="shire-header elenya-header sticky top-0 z-10">
+      <header className="elenya-header sticky top-0 z-10">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4">
           <div className="flex items-center gap-3">
-            <div className="shire-mark elenya-mark" aria-hidden="true" title="The star of Eärendil">
+            <div className="elenya-mark" aria-hidden="true" title="The star of Eärendil">
               <span>✦</span>
             </div>
             <div>
-              <h1 className="shire-title elenya-title text-xl font-bold tracking-tight">
+              <h1 className="elenya-title text-xl font-bold tracking-tight">
                 Elenya
               </h1>
-              <p className="shire-subtitle elenya-subtitle text-xs">
+              <p className="elenya-subtitle text-xs">
                 A timetable beneath the stars of Varda.
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <nav className="shire-tabs elenya-tabs flex gap-1 rounded-xl p-1" aria-label="Planner steps">
+            <nav className="elenya-tabs flex gap-1 rounded-xl p-1" aria-label="Planner steps">
               <TabButton active={tab === "setup"} onClick={() => setTab("setup")} number="1">
                 Gather courses
               </TabButton>
@@ -103,7 +104,7 @@ export default function App() {
         )}
       </main>
 
-      <footer className="shire-footer elenya-footer mx-auto max-w-6xl px-4 pb-10 pt-4 text-center text-xs">
+      <footer className="elenya-footer mx-auto max-w-6xl px-4 pb-10 pt-4 text-center text-xs">
         <span>✧</span> Inspired by the starlit tales of <em>The Silmarillion</em>. Your plans remain in your own browser. <span>✧</span>
       </footer>
       <HelpGuide open={helpOpen} onClose={() => setHelpOpen(false)} onGoTo={(next) => { setTab(next); setHelpOpen(false); }} />

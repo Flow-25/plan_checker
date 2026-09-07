@@ -121,8 +121,8 @@ export default function PlanView({ api, criteria, setCriteria }: Props) {
                     </div>
                     <div className="flex flex-wrap gap-1">
                       <Metric label="gaps" value={formatDuration(r.metrics.gapMinutes)} />
-                      <Metric label="free days" value={String(r.metrics.freeDays)} />
-                      <Metric label="days used" value={String(r.metrics.daysUsed)} />
+                      <Metric label="avg. free days" value={formatCount(r.metrics.freeDays)} />
+                      <Metric label="avg. days used" value={formatCount(r.metrics.daysUsed)} />
                     </div>
                   </button>
                 </li>
@@ -151,8 +151,8 @@ export default function PlanView({ api, criteria, setCriteria }: Props) {
               </h3>
               <div className="flex flex-wrap gap-1">
                 <Metric label="gaps" value={formatDuration(selected.metrics.gapMinutes)} />
-                <Metric label="free days" value={String(selected.metrics.freeDays)} />
-                <Metric label="days used" value={String(selected.metrics.daysUsed)} />
+                <Metric label="avg. free days" value={formatCount(selected.metrics.freeDays)} />
+                <Metric label="avg. days used" value={formatCount(selected.metrics.daysUsed)} />
               </div>
             </div>
             <ScheduleCalendarView
@@ -170,6 +170,10 @@ export default function PlanView({ api, criteria, setCriteria }: Props) {
       </div>
     </div>
   );
+}
+
+function formatCount(value: number) {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1);
 }
 
 function Metric({ label, value }: { label: string; value: string }) {

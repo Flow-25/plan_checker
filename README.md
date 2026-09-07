@@ -3,7 +3,7 @@
 A static, client-side university timetable planner. Enter your courses and their
 lecture / exercise / lab groups, and it generates every **collision-free**
 combination, ranked by the criteria you care about (fewer gaps, more free days,
-later starts, fewer class days).
+and later starts with earlier finishes).
 
 No accounts, no server, no database — all data lives in your browser
 (`localStorage`), with JSON export/import for backup and moving between devices.
@@ -39,9 +39,9 @@ npm test          # run the scheduling logic tests
   incremental backtracking over the Cartesian product of "one group per required
   component per course", pruning any partial assignment that introduces a
   collision. Capped at 2000 results / 3s to stay responsive.
-- **Ranking** (`src/scheduling/ranking.ts`): computes four metrics per plan,
-  normalizes them across the result set, and weighted-sums them using your
-  priority order (higher priority = more weight).
+- **Ranking** (`src/scheduling/ranking.ts`): scores odd and even weeks
+  independently, averages their experience, normalizes the enabled criteria
+  across the result set, and weighted-sums them using your priority order.
 - **No-solution fallback** (`src/scheduling/plan.ts`): if no plan fits every
   course, and you've marked some courses "droppable", it retries dropping the
   smallest set of droppable courses that yields a solution.
@@ -70,12 +70,12 @@ several groups per component imports them all as alternatives to choose among.
 
 ## Usage
 
-1. **Setup tab** — add courses, tick the components each needs, add group
-   options, and give each group its weekly session times. Toggle *Include* to
-   temporarily leave a course out of planning, or *Droppable* to allow it to be
-   dropped as a fallback.
+1. **Gather courses** — add courses, tick the components each needs, add group
+   options, and give each group its weekly session times. Pin a required group,
+   exclude an unavailable option, toggle *Include* to leave a course out, or
+   mark one component *optional* as a fallback.
 2. **Plan & results tab** — pick and order your ranking criteria, browse the
    ranked collision-free plans, and click one to see it on the weekly calendar.
-3. Use **Export / Import JSON** (Setup tab) to back up or transfer your data.
+3. Use **Export JSON / Restore JSON** to back up or transfer your data.
 
 Data autosaves to `localStorage` on every change.

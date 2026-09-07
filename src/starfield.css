@@ -297,3 +297,28 @@
     display: none;
   }
 }
+
+/* Planner controls */
+.group-editor { border-color: rgba(78, 119, 127, .26); transition: opacity .18s, border-color .18s, background .18s; }
+.group-editor.group-pinned { border-color: #b59749; background: rgba(239, 229, 194, .28); }
+.group-editor.group-excluded { opacity: .58; border-style: dashed; }
+.group-action,.backup-button { padding: .35rem .58rem; border: 1px solid #91aaad; border-radius: .45rem; background: #f8fbfa; color: #315763; font-size: .7rem; font-weight: 700; transition: .15s; }
+.group-action:hover,.backup-button:hover { border-color: #527c84; background: #e8f1ef; }
+.group-state { margin: -.2rem 0 .65rem; color: #755f25; font-size: .7rem; }
+.group-state.warning { color: #8a4c42; }
+.backup-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: .4rem; }
+.backup-status { flex-basis: 100%; color: #58747a; text-align: right; font-size: .68rem; }
+.week-switch { display: flex; align-items: center; justify-content: flex-end; gap: .3rem; margin-bottom: .75rem; color: #63797d; font-size: .7rem; }
+.week-switch span { margin-right: .25rem; text-transform: uppercase; letter-spacing: .08em; }
+.week-switch button { min-width: 3.5rem; padding: .3rem .65rem; border: 1px solid #91aaad; background: #f8fbfa; color: #315763; }
+.week-switch button:first-of-type { border-radius: 999px 0 0 999px; }
+.week-switch button:last-of-type { margin-left: -.3rem; border-radius: 0 999px 999px 0; }
+.week-switch button.active { position: relative; z-index: 1; border-color: #b69a52; background: #1d5061; color: #fff; }
+.empty-week-note { margin: 0 0 .75rem; padding: .6rem; border-radius: .5rem; background: #edf3f1; color: #536b70; text-align: center; font-size: .75rem; }
+.dark .group-editor.group-pinned { border-color: #c2a85e; background: rgba(194, 168, 94, .1); }
+.dark .group-action,.dark .backup-button,.dark .week-switch button { border-color: #52747b; background: #17343e; color: #d5e5e2; }
+.dark .group-action:hover,.dark .backup-button:hover { background: #214953; }
+.dark .group-state { color: #e1c979; }.dark .group-state.warning { color: #efa79d; }
+.dark .backup-status,.dark .week-switch { color: #a6c0c1; }
+.dark .week-switch button.active { border-color: #d1b96d; background: #d6c176; color: #102832; }
+.dark .empty-week-note { background: #17343e; color: #bed1cf; }

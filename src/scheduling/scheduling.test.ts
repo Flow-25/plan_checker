@@ -146,6 +146,41 @@ describe("generateCombinations", () => {
     const res = generateCombinations(courses, groups);
     expect(res.combinations).toHaveLength(2);
   });
+
+  it("rejects groups with no sessions", () => {
+    const res = generateCombinations([course("A")], [group("empty", "A", [])]);
+    expect(res.combinations).toHaveLength(0);
+    expect(res.emptySlots).toEqual([{ courseId: "A", type: "lecture" }]);
+  });
+
+  it("rejects groups containing malformed session times", () => {
+    const malformed = group("bad", "A", [session({ startTime: "25:00", endTime: "26:00" })]);
+    const backwards = group("backwards", "A", [session({ startTime: "11:00", endTime: "10:00" })]);
+    const res = generateCombinations([course("A")], [malformed, backwards]);
+    expect(res.combinations).toHaveLength(0);
+    expect(res.emptySlots).toEqual([{ courseId: "A", type: "lecture" }]);
+  });
+
+  it("rejects a group whose own sessions collide", () => {
+    const invalid = group("self-collision", "A", [
+      session({ startTime: "09:00", endTime: "11:00" }),
+      session({ startTime: "10:00", endTime: "12:00" }),
+    ]);
+    const res = generateCombinations([course("A")], [invalid]);
+    expect(res.combinations).toHaveLength(0);
+    expect(res.emptySlots).toEqual([{ courseId: "A", type: "lecture" }]);
+  });
+
+  it("honors excluded and pinned group choices", () => {
+    const groups = [
+      { ...group("excluded", "A", [session({ dayOfWeek: 1 })]), excluded: true },
+      group("available", "A", [session({ dayOfWeek: 2 })]),
+      { ...group("pinned", "A", [session({ dayOfWeek: 3 })]), pinned: true },
+    ];
+    const res = generateCombinations([course("A")], groups);
+    expect(res.combinations).toHaveLength(1);
+    expect(res.combinations[0].groupIds).toEqual(["pinned"]);
+  });
 });
 
 describe("ranking", () => {
@@ -182,5 +217,33 @@ describe("ranking", () => {
       { criteria: DEFAULT_CRITERIA },
     );
     expect(ranked[0].combination.groupIds).toEqual(["noGap"]);
+  });
+
+  it("does not create a gap between odd-only and even-only sessions", () => {
+    const alternating = group("alternating", "A", [
+      session({ dayOfWeek: 1, startTime: "08:00", endTime: "09:00", weekParity: "odd" }),
+      session({ dayOfWeek: 1, startTime: "15:00", endTime: "16:00", weekParity: "even" }),
+    ]);
+    const metrics = computeMetrics(
+      { groupIds: ["alternating"], droppedSlots: [] },
+      new Map([[alternating.id, alternating]]),
+    );
+    expect(metrics.gapMinutes).toBe(0);
+    expect(metrics.daysUsed).toBe(1);
+  });
+
+  it("balances later starts and earlier finishes independently", () => {
+    const earlyLong = group("earlyLong", "A", [session({ startTime: "08:00", endTime: "16:00" })]);
+    const lateShort = group("lateShort", "A", [session({ startTime: "10:00", endTime: "14:00" })]);
+    const criteria = [{ key: "lateStartEarlyFinish" as const, enabled: true }];
+    const ranked = rankCombinations(
+      [
+        { groupIds: ["earlyLong"], droppedSlots: [] },
+        { groupIds: ["lateShort"], droppedSlots: [] },
+      ],
+      new Map([earlyLong, lateShort].map((g) => [g.id, g])),
+      { criteria },
+    );
+    expect(ranked[0].combination.groupIds).toEqual(["lateShort"]);
   });
 });
