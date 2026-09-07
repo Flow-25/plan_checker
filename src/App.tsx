@@ -40,24 +40,27 @@ export default function App() {
   }, [criteria]);
 
   return (
-    <div className="shire-app min-h-screen text-slate-900 dark:text-slate-100">
-      <header className="shire-header sticky top-0 z-10">
+    <div className="shire-app elenya-app min-h-screen text-slate-900 dark:text-slate-100">
+      <div className="starfield" aria-hidden="true">
+        {Array.from({ length: 68 }, (_, index) => <i key={index} />)}
+      </div>
+      <header className="shire-header elenya-header sticky top-0 z-10">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4">
           <div className="flex items-center gap-3">
-            <div className="shire-mark" aria-hidden="true">
-              <span>🍃</span>
+            <div className="shire-mark elenya-mark" aria-hidden="true" title="The star of Eärendil">
+              <span>✦</span>
             </div>
             <div>
-              <h1 className="shire-title text-xl font-bold tracking-tight">
-                The Weeksmith
+              <h1 className="shire-title elenya-title text-xl font-bold tracking-tight">
+                Elenya
               </h1>
-              <p className="shire-subtitle text-xs">
-                Make room for study, second breakfast, and the road ahead.
+              <p className="shire-subtitle elenya-subtitle text-xs">
+                A timetable beneath the stars of Varda.
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <nav className="shire-tabs flex gap-1 rounded-xl p-1" aria-label="Planner steps">
+            <nav className="shire-tabs elenya-tabs flex gap-1 rounded-xl p-1" aria-label="Planner steps">
               <TabButton active={tab === "setup"} onClick={() => setTab("setup")} number="1">
                 Gather courses
               </TabButton>
@@ -83,12 +86,15 @@ export default function App() {
       <main className="mx-auto max-w-6xl px-4 py-8">
         <div className="journey-banner mb-7">
           <div>
-            <span className="eyebrow">{tab === "setup" ? "Step one · Pack your satchel" : "Step two · Find the fairest path"}</span>
-            <p>{tab === "setup" ? "Tell us which classes you may attend. Every change is saved on this device." : "Compare the best clash-free weeks, ordered by what matters to you."}</p>
+            <span className="eyebrow">{tab === "setup" ? "Before the journey · Gather your courses" : "By the light of Eärendil · Shape your week"}</span>
+            <p>{tab === "setup" ? "Enter every class you may attend. Your choices remain safely on this device." : "Compare each collision-free path, ordered by what matters to you."}</p>
           </div>
           {tab === "setup" && api.data.courses.length > 0 && (
             <button className="primary-cta" onClick={() => setTab("plan")}>Find my timetable <span>→</span></button>
           )}
+        </div>
+        <div className="arda-line mb-7" aria-label="Silmarillion-inspired decoration">
+          <span>Telperion</span><i>✦</i><span>Varda</span><b>◇</b><span>Eärendil</span><i>✦</i><span>Laurelin</span>
         </div>
         {tab === "setup" ? (
           <SetupView api={api} />
@@ -97,8 +103,8 @@ export default function App() {
         )}
       </main>
 
-      <footer className="shire-footer mx-auto max-w-6xl px-4 pb-10 pt-4 text-center text-xs">
-        <span>❦</span> No account and no distant server. Your plans stay in your own browser. <span>❦</span>
+      <footer className="shire-footer elenya-footer mx-auto max-w-6xl px-4 pb-10 pt-4 text-center text-xs">
+        <span>✧</span> Inspired by the starlit tales of <em>The Silmarillion</em>. Your plans remain in your own browser. <span>✧</span>
       </footer>
       <HelpGuide open={helpOpen} onClose={() => setHelpOpen(false)} onGoTo={(next) => { setTab(next); setHelpOpen(false); }} />
     </div>

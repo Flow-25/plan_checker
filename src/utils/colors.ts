@@ -9,18 +9,18 @@ export interface CourseColor {
 }
 
 export const COURSE_COLORS: CourseColor[] = [
-  { name: "blue", bg: "bg-blue-100", border: "border-blue-400", text: "text-blue-900", dot: "bg-blue-500" },
-  { name: "emerald", bg: "bg-emerald-100", border: "border-emerald-400", text: "text-emerald-900", dot: "bg-emerald-500" },
-  { name: "amber", bg: "bg-amber-100", border: "border-amber-400", text: "text-amber-900", dot: "bg-amber-500" },
-  { name: "violet", bg: "bg-violet-100", border: "border-violet-400", text: "text-violet-900", dot: "bg-violet-500" },
-  { name: "rose", bg: "bg-rose-100", border: "border-rose-400", text: "text-rose-900", dot: "bg-rose-500" },
-  { name: "cyan", bg: "bg-cyan-100", border: "border-cyan-400", text: "text-cyan-900", dot: "bg-cyan-500" },
-  { name: "orange", bg: "bg-orange-100", border: "border-orange-400", text: "text-orange-900", dot: "bg-orange-500" },
-  { name: "teal", bg: "bg-teal-100", border: "border-teal-400", text: "text-teal-900", dot: "bg-teal-500" },
-  { name: "fuchsia", bg: "bg-fuchsia-100", border: "border-fuchsia-400", text: "text-fuchsia-900", dot: "bg-fuchsia-500" },
-  { name: "lime", bg: "bg-lime-100", border: "border-lime-400", text: "text-lime-900", dot: "bg-lime-500" },
-  { name: "indigo", bg: "bg-indigo-100", border: "border-indigo-400", text: "text-indigo-900", dot: "bg-indigo-500" },
-  { name: "pink", bg: "bg-pink-100", border: "border-pink-400", text: "text-pink-900", dot: "bg-pink-500" },
+  { name: "blue", bg: "bg-sky-100 dark:bg-sky-950", border: "border-sky-400 dark:border-sky-700", text: "text-sky-950 dark:text-sky-100", dot: "bg-sky-500" },
+  { name: "emerald", bg: "bg-teal-100 dark:bg-teal-950", border: "border-teal-400 dark:border-teal-700", text: "text-teal-950 dark:text-teal-100", dot: "bg-teal-500" },
+  { name: "amber", bg: "bg-amber-100 dark:bg-amber-950", border: "border-amber-400 dark:border-amber-700", text: "text-amber-950 dark:text-amber-100", dot: "bg-amber-500" },
+  { name: "violet", bg: "bg-violet-100 dark:bg-violet-950", border: "border-violet-400 dark:border-violet-700", text: "text-violet-950 dark:text-violet-100", dot: "bg-violet-500" },
+  { name: "rose", bg: "bg-rose-100 dark:bg-rose-950", border: "border-rose-400 dark:border-rose-700", text: "text-rose-950 dark:text-rose-100", dot: "bg-rose-500" },
+  { name: "cyan", bg: "bg-cyan-100 dark:bg-cyan-950", border: "border-cyan-400 dark:border-cyan-700", text: "text-cyan-950 dark:text-cyan-100", dot: "bg-cyan-500" },
+  { name: "orange", bg: "bg-orange-100 dark:bg-orange-950", border: "border-orange-400 dark:border-orange-700", text: "text-orange-950 dark:text-orange-100", dot: "bg-orange-500" },
+  { name: "teal", bg: "bg-emerald-100 dark:bg-emerald-950", border: "border-emerald-400 dark:border-emerald-700", text: "text-emerald-950 dark:text-emerald-100", dot: "bg-emerald-500" },
+  { name: "fuchsia", bg: "bg-fuchsia-100 dark:bg-fuchsia-950", border: "border-fuchsia-400 dark:border-fuchsia-700", text: "text-fuchsia-950 dark:text-fuchsia-100", dot: "bg-fuchsia-500" },
+  { name: "lime", bg: "bg-lime-100 dark:bg-lime-950", border: "border-lime-400 dark:border-lime-700", text: "text-lime-950 dark:text-lime-100", dot: "bg-lime-500" },
+  { name: "indigo", bg: "bg-indigo-100 dark:bg-indigo-950", border: "border-indigo-400 dark:border-indigo-700", text: "text-indigo-950 dark:text-indigo-100", dot: "bg-indigo-500" },
+  { name: "pink", bg: "bg-pink-100 dark:bg-pink-950", border: "border-pink-400 dark:border-pink-700", text: "text-pink-950 dark:text-pink-100", dot: "bg-pink-500" },
 ];
 
 export function colorByName(name: string): CourseColor {

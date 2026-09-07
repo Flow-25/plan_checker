@@ -33,7 +33,7 @@ export default function SetupView({ api }: Props) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="text-xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
-            Pack your course satchel
+            Gather your courses
           </h2>
           <p className="text-sm text-slate-500 dark:text-slate-400">
             Add every class group you could attend—the planner will choose one of each.
@@ -96,8 +96,8 @@ export default function SetupView({ api }: Props) {
       {api.data.courses.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-slate-300 dark:border-slate-600 bg-white/50 p-12 text-center text-slate-400 dark:text-slate-500">
           <div className="mb-3 text-3xl">🌱</div>
-          <strong className="block text-slate-700 dark:text-slate-200">Your satchel is empty</strong>
-          Import your USOS plan above, or add your first course to begin the journey.
+          <strong className="block text-slate-700 dark:text-slate-200">No courses yet</strong>
+          Import your USOS plan above, or add your first course to begin.
         </div>
       ) : (
         <div className="space-y-4">

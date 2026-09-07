@@ -1,0 +1,299 @@
+/* Smooth atmospheric background; individual DOM stars prevent tiled/raster squares. */
+.elenya-app {
+  position: relative;
+  isolation: isolate;
+  background-color: #eaf0ef;
+  background-image: linear-gradient(135deg, #f7f9f5 0%, #e6efed 48%, #d6e5e7 100%);
+  background-attachment: fixed;
+}
+
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.starfield i {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #477985;
+  opacity: 0;
+  box-shadow: none;
+}
+
+/* Deliberately non-periodic placement. */
+.starfield i:nth-child(1){left:2.7%;top:8.3%}.starfield i:nth-child(2){left:10.8%;top:31.7%;width:2px;height:2px}.starfield i:nth-child(3){left:17.4%;top:3.9%}.starfield i:nth-child(4){left:26.8%;top:46.2%;width:4px;height:4px;opacity:.13}.starfield i:nth-child(5){left:34.1%;top:16.8%;width:2px;height:2px}.starfield i:nth-child(6){left:41.7%;top:69.4%}.starfield i:nth-child(7){left:48.9%;top:6.6%;width:4px;height:4px;opacity:.14}.starfield i:nth-child(8){left:57.3%;top:37.2%;width:2px;height:2px}.starfield i:nth-child(9){left:63.1%;top:12.7%}.starfield i:nth-child(10){left:70.6%;top:58.1%;width:2px;height:2px}.starfield i:nth-child(11){left:79.4%;top:22.8%}.starfield i:nth-child(12){left:86.7%;top:75.3%;width:4px;height:4px;opacity:.12}.starfield i:nth-child(13){left:94.3%;top:10.6%;width:2px;height:2px}.starfield i:nth-child(14){left:6.8%;top:84.2%}.starfield i:nth-child(15){left:22.7%;top:73.5%;width:2px;height:2px}.starfield i:nth-child(16){left:38.2%;top:92.4%}.starfield i:nth-child(17){left:54.1%;top:83.6%;width:4px;height:4px;opacity:.13}.starfield i:nth-child(18){left:68.4%;top:94.1%;width:2px;height:2px}.starfield i:nth-child(19){left:82.8%;top:45.7%}.starfield i:nth-child(20){left:97.1%;top:91.3%;width:4px;height:4px;opacity:.12}.starfield i:nth-child(21){left:13.9%;top:57.8%;width:2px;height:2px}.starfield i:nth-child(22){left:31.4%;top:80.7%}.starfield i:nth-child(23){left:46.2%;top:27.4%;width:2px;height:2px}.starfield i:nth-child(24){left:59.8%;top:88.2%}.starfield i:nth-child(25){left:74.5%;top:4.8%;width:4px;height:4px;opacity:.13}.starfield i:nth-child(26){left:91.2%;top:34.6%;width:2px;height:2px}.starfield i:nth-child(27){left:4.4%;top:63.1%;width:2px;height:2px}.starfield i:nth-child(28){left:19.6%;top:21.3%;width:4px;height:4px;opacity:.12}.starfield i:nth-child(29){left:37.5%;top:54.9%;width:2px;height:2px}.starfield i:nth-child(30){left:52.7%;top:97.2%}.starfield i:nth-child(31){left:66.3%;top:31.8%;width:2px;height:2px}.starfield i:nth-child(32){left:77.1%;top:86.4%}.starfield i:nth-child(33){left:89.6%;top:62.7%;width:2px;height:2px}.starfield i:nth-child(34){left:98.2%;top:49.1%}
+.starfield i:nth-child(35){left:1.3%;top:39.6%;width:2px;height:2px}.starfield i:nth-child(36){left:8.6%;top:18.9%}.starfield i:nth-child(37){left:14.8%;top:94.7%;width:2px;height:2px}.starfield i:nth-child(38){left:21.2%;top:49.8%}.starfield i:nth-child(39){left:25.5%;top:10.7%;width:2px;height:2px}.starfield i:nth-child(40){left:29.7%;top:66.3%}.starfield i:nth-child(41){left:33.2%;top:35.1%;width:2px;height:2px}.starfield i:nth-child(42){left:36.8%;top:4.6%}.starfield i:nth-child(43){left:40.9%;top:23.8%;width:2px;height:2px}.starfield i:nth-child(44){left:44.3%;top:77.6%}.starfield i:nth-child(45){left:47.6%;top:51.2%;width:2px;height:2px}.starfield i:nth-child(46){left:51.8%;top:15.9%}.starfield i:nth-child(47){left:55.6%;top:61.4%;width:2px;height:2px}.starfield i:nth-child(48){left:58.4%;top:2.1%}.starfield i:nth-child(49){left:61.7%;top:78.8%;width:2px;height:2px}.starfield i:nth-child(50){left:65.9%;top:48.3%}.starfield i:nth-child(51){left:69.8%;top:20.5%;width:2px;height:2px}.starfield i:nth-child(52){left:73.2%;top:70.9%}.starfield i:nth-child(53){left:76.4%;top:39.3%;width:2px;height:2px}.starfield i:nth-child(54){left:80.7%;top:7.4%}.starfield i:nth-child(55){left:84.1%;top:92.8%;width:2px;height:2px}.starfield i:nth-child(56){left:88.3%;top:55.6%}.starfield i:nth-child(57){left:92.7%;top:81.1%;width:2px;height:2px}.starfield i:nth-child(58){left:96.3%;top:26.4%}.starfield i:nth-child(59){left:5.9%;top:51.7%;width:2px;height:2px}.starfield i:nth-child(60){left:16.1%;top:64.5%}.starfield i:nth-child(61){left:30.1%;top:97.8%;width:2px;height:2px}.starfield i:nth-child(62){left:43.1%;top:42.6%}.starfield i:nth-child(63){left:56.9%;top:74.1%;width:2px;height:2px}.starfield i:nth-child(64){left:67.7%;top:7.9%}.starfield i:nth-child(65){left:72.4%;top:97.1%;width:2px;height:2px}.starfield i:nth-child(66){left:81.9%;top:68.2%}.starfield i:nth-child(67){left:90.4%;top:16.1%;width:2px;height:2px}.starfield i:nth-child(68){left:95.1%;top:70.4%}
+
+.starfield i:nth-child(6n + 2),
+.starfield i:nth-child(11n + 3) {
+  background: #b79a53;
+  box-shadow: 0 0 4px rgba(183, 154, 83, .22);
+}
+
+.starfield i:nth-child(n + 35) { opacity: 0; }
+
+.dark .elenya-app {
+  background: #081923;
+}
+
+.dark .starfield i {
+  background: #dcefeb;
+  opacity: .82;
+  box-shadow: 0 0 4px rgba(210, 240, 237, .72);
+}
+
+.dark .starfield i:nth-child(n + 35) {
+  opacity: .56;
+}
+
+.dark .starfield i:nth-child(6n + 2),
+.dark .starfield i:nth-child(11n + 3) {
+  background: #e1c677;
+  box-shadow: 0 0 6px rgba(225, 198, 119, .55);
+}
+
+.dark .starfield i:nth-child(4n) {
+  width: 4px;
+  height: 4px;
+  opacity: .66;
+}
+
+.dark .starfield i:nth-child(7n) {
+  width: 2px;
+  height: 2px;
+  opacity: .48;
+  box-shadow: none;
+}
+
+/* Remove older corner canvases whose rectangular bounds can show on some GPUs. */
+.elenya-app::before,
+.elenya-app::after {
+  display: none;
+}
+
+/* Explicit guide contrast — do not let legacy utility colours leak into it. */
+.elenya-app .guide-dialog {
+  background: #f7faf8;
+  color: #20343f;
+}
+
+.elenya-app .guide-dialog h2,
+.elenya-app .guide-dialog h3,
+.elenya-app .guide-dialog h4,
+.elenya-app .guide-dialog b,
+.elenya-app .guide-dialog strong {
+  color: #173e50 !important;
+}
+
+.elenya-app .guide-dialog p,
+.elenya-app .guide-dialog li,
+.elenya-app .guide-lead,
+.elenya-app .walkthrough-heading p,
+.elenya-app .visual-step p,
+.elenya-app .choice-grid p,
+.elenya-app .screenshot-caption,
+.elenya-app .possibilities-list li {
+  color: #40585f !important;
+}
+
+.elenya-app .guide-dialog .eyebrow {
+  color: #806821 !important;
+}
+
+.elenya-app .guide-steps article,
+.elenya-app .visual-step,
+.elenya-app .choice-grid article {
+  background: #edf4f2;
+  border-color: #a9c0c0;
+}
+
+.elenya-app .guide-tip,
+.elenya-app .possibilities-list {
+  background: #e5eeea;
+  border-color: #829f9e;
+  color: #304b52;
+}
+
+.elenya-app .guide-close {
+  background: #ffffff;
+  border-color: #78979e;
+  color: #173e50;
+}
+
+/* The mini screenshots deliberately retain their own light UI palette. */
+.elenya-app .mock-browser,
+.elenya-app .ranking-shot,
+.elenya-app .results-shot {
+  background: #ffffff;
+  color: #26383e;
+}
+
+.elenya-app .mock-browser p,
+.elenya-app .ranking-shot p,
+.elenya-app .results-shot p {
+  color: #405159 !important;
+}
+
+.dark .elenya-app .guide-dialog {
+  background: #102832;
+  color: #edf5f3;
+}
+
+.dark .elenya-app .guide-dialog h2,
+.dark .elenya-app .guide-dialog h3,
+.dark .elenya-app .guide-dialog h4,
+.dark .elenya-app .guide-dialog b,
+.dark .elenya-app .guide-dialog strong {
+  color: #f2f7f5 !important;
+}
+
+.dark .elenya-app .guide-dialog p,
+.dark .elenya-app .guide-dialog li,
+.dark .elenya-app .guide-lead,
+.dark .elenya-app .walkthrough-heading p,
+.dark .elenya-app .visual-step p,
+.dark .elenya-app .choice-grid p,
+.dark .elenya-app .screenshot-caption,
+.dark .elenya-app .possibilities-list li {
+  color: #c7d9d7 !important;
+}
+
+.dark .elenya-app .guide-dialog .eyebrow {
+  color: #e5cb7c !important;
+}
+
+.dark .elenya-app .guide-steps article,
+.dark .elenya-app .visual-step,
+.dark .elenya-app .choice-grid article {
+  background: #183944;
+  border-color: #426974;
+}
+
+.dark .elenya-app .guide-tip,
+.dark .elenya-app .possibilities-list {
+  background: #1b3d43;
+  border-color: #5f8586;
+  color: #d8e7e4;
+}
+
+.dark .elenya-app .guide-close {
+  background: #1a3943;
+  border-color: #668c94;
+  color: #ffffff;
+}
+
+.dark .elenya-app .guide-dialog .secondary-cta {
+  background: #e6efec;
+  border-color: #ffffff;
+  color: #173e50;
+}
+
+/* Keep screenshot examples readable in dark mode rather than tinting them. */
+.dark .elenya-app .mock-browser,
+.dark .elenya-app .ranking-shot,
+.dark .elenya-app .results-shot {
+  background: #f8faf8;
+  color: #26383e;
+}
+
+.dark .elenya-app .shot-results {
+  background: #edf2ef;
+}
+
+.dark .elenya-app .result-card,
+.dark .elenya-app .shot-priorities > div {
+  background: #ffffff;
+  color: #26383e;
+}
+
+.dark .elenya-app .result-card.chosen,
+.dark .elenya-app .shot-note {
+  background: #dcebe7;
+  color: #244b54;
+}
+
+.dark .elenya-app .mock-browser p,
+.dark .elenya-app .ranking-shot p,
+.dark .elenya-app .results-shot p,
+.dark .elenya-app .ranking-shot small,
+.dark .elenya-app .results-shot small {
+  color: #53666c !important;
+}
+
+.dark .elenya-app .mock-browser b,
+.dark .elenya-app .mock-browser strong,
+.dark .elenya-app .ranking-shot b,
+.dark .elenya-app .ranking-shot strong,
+.dark .elenya-app .results-shot b,
+.dark .elenya-app .results-shot strong {
+  color: #26383e !important;
+}
+
+.arda-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+  margin-top: -1rem;
+  color: #607b80;
+  font-size: .62rem;
+  font-variant: small-caps;
+  letter-spacing: .15em;
+  opacity: .78;
+}
+
+.arda-line::before,
+.arda-line::after {
+  content: "";
+  width: min(110px, 10vw);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #78999e);
+}
+
+.arda-line::after {
+  transform: scaleX(-1);
+}
+
+.arda-line i {
+  color: #a4883e;
+  font-style: normal;
+}
+
+.arda-line b {
+  color: #315f68;
+  font-weight: normal;
+}
+
+.elenya-footer em {
+  color: #476d73;
+}
+
+.dark .arda-line {
+  color: #99b6b8;
+}
+
+.dark .arda-line::before,
+.dark .arda-line::after {
+  background: linear-gradient(90deg, transparent, #517c83);
+}
+
+.dark .arda-line i {
+  color: #e1c677;
+}
+
+.dark .arda-line b,
+.dark .elenya-footer em {
+  color: #b9d4d3;
+}
+
+@media (max-width: 620px) {
+  .arda-line span:nth-of-type(1),
+  .arda-line span:nth-of-type(4) {
+    display: none;
+  }
+}

@@ -19,19 +19,19 @@ export default function HelpGuide({ open, onClose, onGoTo }: Props) {
     <div className="guide-backdrop" role="presentation" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <section className="guide-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-title">
         <button className="guide-close" onClick={onClose} aria-label="Close guide">×</button>
-        <span className="eyebrow">A small field guide</span>
-        <h2 id="guide-title">What is The Weeksmith?</h2>
-        <p className="guide-lead">It takes all the class groups you <em>could</em> attend and finds complete weekly timetables without collisions. Nothing is uploaded; your data lives in this browser.</p>
+        <span className="eyebrow">A guide from under Varda’s stars</span>
+        <h2 id="guide-title">What is Elenya?</h2>
+        <p className="guide-lead"><strong>Elenya</strong> is named for Stars-day in Tolkien’s Quenya. Its silver, gold, and deep-blue design draws from Varda’s stars, the Two Trees of Valinor, and the light carried by Eärendil—not astrology. The planner takes all the class groups you <em>could</em> attend and finds complete weekly timetables without collisions. Nothing is uploaded; your data lives in this browser.</p>
         <div className="guide-steps">
           <article><span>1</span><div><h3>Gather your courses</h3><p>Import a semester plan from USOS, or add courses by hand. For each lecture, exercise, or lab, add every group you are willing to attend.</p></div></article>
           <article><span>2</span><div><h3>Describe each group</h3><p>Add its day and time. A group may have several meetings. Mark a component “optional” only if a valid plan may leave it out.</p></div></article>
-          <article><span>3</span><div><h3>Choose the fairest week</h3><p>Set your priorities, then browse the ranked results. The first result is the closest match; choose any card to see its calendar.</p></div></article>
+          <article><span>3</span><div><h3>Choose your best week</h3><p>Set your priorities, then browse the ranked results. The first result is the closest match; choose any card to see its calendar.</p></div></article>
         </div>
         <div className="usos-walkthrough">
           <div className="walkthrough-heading">
             <span className="eyebrow">Importing from USOS</span>
-            <h3>Bring your timetable into USOSdestroyer</h3>
-            <p>Before importing, you must create a plan in USOS and add <strong>all courses and class groups that you attend or could attend</strong>. USOSdestroyer can only find combinations from the choices present on that plan.</p>
+            <h3>Bring your timetable into Elenya</h3>
+            <p>Before importing, you must create a plan in USOS and add <strong>all courses and class groups that you attend or could attend</strong>. Elenya can only find combinations from the choices present on that plan.</p>
           </div>
 
           <article className="visual-step">
@@ -69,18 +69,18 @@ export default function HelpGuide({ open, onClose, onGoTo }: Props) {
           </article>
 
           <article className="visual-step reverse">
-            <div className="mock-browser paste-shot" aria-label="Illustration of pasting HTML into USOSdestroyer">
-              <div className="mock-browser-bar"><i/><i/><i/><span>USOSdestroyer</span></div>
+            <div className="mock-browser paste-shot" aria-label="Illustration of pasting HTML into Elenya">
+              <div className="mock-browser-bar"><i/><i/><i/><span>Elenya</span></div>
               <div className="mock-screen"><div className="mock-title">Import from USOS</div><div className="mock-textarea">Paste the copied page HTML here…</div><div className="mock-button">Read plan</div></div>
             </div>
-            <div><b>4. Paste it into USOSdestroyer</b><p>Return here, open <strong>Import from USOS</strong>, paste the copied HTML into the box, choose <strong>Read plan</strong>, review what was found, and finally choose <strong>Add to my courses</strong>.</p></div>
+            <div><b>4. Paste it into Elenya</b><p>Return here, open <strong>Import from USOS</strong>, paste the copied HTML into the box, choose <strong>Read plan</strong>, review what was found, and finally choose <strong>Add to my courses</strong>.</p></div>
           </article>
         </div>
         <div className="plan-walkthrough">
           <div className="walkthrough-heading">
             <span className="eyebrow">Choosing the best plan</span>
             <h3>“Best” means best for you</h3>
-            <p>USOSdestroyer first rejects schedules with collisions, then ranks every valid timetable using the preferences you enable. The preference at the top has the strongest influence; each preference below it has less.</p>
+            <p>Elenya first rejects schedules with collisions, then ranks every valid timetable using the preferences you enable. The preference at the top has the strongest influence; each preference below it has less.</p>
           </div>
 
           <div className="ranking-shot" aria-label="Illustration of arranging timetable ranking priorities">

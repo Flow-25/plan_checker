@@ -82,7 +82,7 @@ export default function UsosImport({ api }: Props) {
                 On macOS use the browser menu to open page source, then ⌘A and ⌘C.
               </li>
               <li>
-                Paste the HTML into USOSdestroyer below and press <strong>Read plan</strong>.
+                Paste the HTML into Elenya below and press <strong>Read plan</strong>.
               </li>
             </ol>
             <p className="mt-2 text-[11px] text-slate-500 dark:text-slate-400">
