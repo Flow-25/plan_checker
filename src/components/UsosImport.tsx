@@ -61,34 +61,28 @@ export default function UsosImport({ api }: Props) {
               How to get your plan HTML
             </h4>
             <ol className="list-decimal space-y-1.5 pl-5 text-xs leading-relaxed text-slate-700 dark:text-slate-200">
-              <li>Open your plan share link in USOSweb (a browser tab).</li>
+              <li>Create a personal plan in USOSweb for the correct semester.</li>
+              <li>Add <strong>all courses and every class group</strong> that you attend or would be willing to attend.</li>
+              <li>Open the finished plan in a browser tab.</li>
               <li>
                 Above the timetable, switch the view to{" "}
                 <strong>„semestralny”</strong> (whole semester) — the default
                 week view is empty outside term time.
               </li>
               <li>
-                Click anywhere on the page, then press{" "}
+                Right-click an empty part of the page and choose <strong>View page source</strong>, or press{" "}
                 <kbd className="rounded border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-1">
                   Ctrl
                 </kbd>{" "}
                 +{" "}
                 <kbd className="rounded border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-1">
-                  A
+                  U
                 </kbd>{" "}
-                to select all, and{" "}
-                <kbd className="rounded border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-1">
-                  Ctrl
-                </kbd>{" "}
-                +{" "}
-                <kbd className="rounded border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-1">
-                  C
-                </kbd>{" "}
-                to copy. (Or right-click → <em>View Page Source</em>, then
-                select-all + copy.)
+                . In the new source tab, press Ctrl+A and then Ctrl+C to copy all HTML.
+                On macOS use the browser menu to open page source, then ⌘A and ⌘C.
               </li>
               <li>
-                Paste it into the box below and press <strong>Read plan</strong>.
+                Paste the HTML into USOSdestroyer below and press <strong>Read plan</strong>.
               </li>
             </ol>
             <p className="mt-2 text-[11px] text-slate-500 dark:text-slate-400">

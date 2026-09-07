@@ -25,10 +25,10 @@ export default function CriteriaSelector({ criteria, onChange }: Props) {
   return (
     <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 shadow-sm">
       <h3 className="mb-1 text-sm font-semibold text-slate-800 dark:text-slate-100">
-        Ranking priorities
+        What makes a good week?
       </h3>
       <p className="mb-3 text-xs text-slate-500 dark:text-slate-400">
-        Enable the criteria that matter and order them — higher = more weight.
+        Tick what matters, then move your strongest preference to the top.
       </p>
       <ol className="space-y-2">
         {criteria.map((c, i) => (

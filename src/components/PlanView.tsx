@@ -51,7 +51,7 @@ export default function PlanView({ api, criteria, setCriteria }: Props) {
 
         <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 shadow-sm">
           <div className="mb-2 flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Results</h3>
+            <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Possible paths</h3>
             <span className="text-xs text-slate-500 dark:text-slate-400">
               {outcome.ranked.length} plan(s)
               {outcome.truncated && " (capped)"}
@@ -60,7 +60,7 @@ export default function PlanView({ api, criteria, setCriteria }: Props) {
 
           {includedCount === 0 && (
             <p className="text-sm text-slate-400 dark:text-slate-500">
-              No courses are included in planning. Enable at least one course in Setup.
+              Your map is blank. Return to Gather courses and include at least one course.
             </p>
           )}
 
@@ -147,7 +147,7 @@ export default function PlanView({ api, criteria, setCriteria }: Props) {
           <>
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
               <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">
-                Plan #{selectedIndex + 1}
+                Your week · option #{selectedIndex + 1}
               </h3>
               <div className="flex flex-wrap gap-1">
                 <Metric label="gaps" value={formatDuration(selected.metrics.gapMinutes)} />

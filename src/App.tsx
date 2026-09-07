@@ -5,6 +5,7 @@ import type { CriteriaOrder } from "./types";
 import { DEFAULT_CRITERIA } from "./types";
 import SetupView from "./components/SetupView";
 import PlanView from "./components/PlanView";
+import HelpGuide from "./components/HelpGuide";
 
 type Tab = "setup" | "plan";
 
@@ -32,42 +33,46 @@ export default function App() {
   const { theme, toggle } = useTheme();
   const [tab, setTab] = useState<Tab>("setup");
   const [criteria, setCriteria] = useState<CriteriaOrder>(() => loadCriteria());
+  const [helpOpen, setHelpOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem(CRITERIA_KEY, JSON.stringify(criteria));
   }, [criteria]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-slate-50 to-slate-100 text-slate-900 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 dark:text-slate-100">
-      <header className="sticky top-0 z-10 border-b border-slate-200/80 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
+    <div className="shire-app min-h-screen text-slate-900 dark:text-slate-100">
+      <header className="shire-header sticky top-0 z-10">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-lg text-white shadow-sm">
-              📅
+            <div className="shire-mark" aria-hidden="true">
+              <span>🍃</span>
             </div>
             <div>
-              <h1 className="text-lg font-bold tracking-tight text-slate-800 dark:text-slate-100">
-                Schedule Planner
+              <h1 className="shire-title text-xl font-bold tracking-tight">
+                The Weeksmith
               </h1>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                Collision-free university timetables — 100% in your browser.
+              <p className="shire-subtitle text-xs">
+                Make room for study, second breakfast, and the road ahead.
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <nav className="flex gap-1 rounded-xl border border-slate-200 bg-slate-100/80 p-1 dark:border-slate-700 dark:bg-slate-800/80">
-              <TabButton active={tab === "setup"} onClick={() => setTab("setup")}>
-                Setup
+            <nav className="shire-tabs flex gap-1 rounded-xl p-1" aria-label="Planner steps">
+              <TabButton active={tab === "setup"} onClick={() => setTab("setup")} number="1">
+                Gather courses
               </TabButton>
-              <TabButton active={tab === "plan"} onClick={() => setTab("plan")}>
-                Plan &amp; results
+              <TabButton active={tab === "plan"} onClick={() => setTab("plan")} number="2">
+                Choose a week
               </TabButton>
             </nav>
+            <button onClick={() => setHelpOpen(true)} className="help-button" aria-haspopup="dialog">
+              <span aria-hidden="true">?</span><span className="help-label">What’s this?</span>
+            </button>
             <button
               onClick={toggle}
               title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
               aria-label="Toggle dark mode"
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-lg shadow-sm transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700"
+              className="theme-button flex h-10 w-10 items-center justify-center rounded-full text-lg transition"
             >
               {theme === "dark" ? "☀️" : "🌙"}
             </button>
@@ -76,6 +81,15 @@ export default function App() {
       </header>
 
       <main className="mx-auto max-w-6xl px-4 py-8">
+        <div className="journey-banner mb-7">
+          <div>
+            <span className="eyebrow">{tab === "setup" ? "Step one · Pack your satchel" : "Step two · Find the fairest path"}</span>
+            <p>{tab === "setup" ? "Tell us which classes you may attend. Every change is saved on this device." : "Compare the best clash-free weeks, ordered by what matters to you."}</p>
+          </div>
+          {tab === "setup" && api.data.courses.length > 0 && (
+            <button className="primary-cta" onClick={() => setTab("plan")}>Find my timetable <span>→</span></button>
+          )}
+        </div>
         {tab === "setup" ? (
           <SetupView api={api} />
         ) : (
@@ -83,10 +97,10 @@ export default function App() {
         )}
       </main>
 
-      <footer className="mx-auto max-w-6xl px-4 pb-10 pt-4 text-center text-xs text-slate-400 dark:text-slate-500">
-        No account, no server. Everything stays local — export a backup to move
-        between devices.
+      <footer className="shire-footer mx-auto max-w-6xl px-4 pb-10 pt-4 text-center text-xs">
+        <span>❦</span> No account and no distant server. Your plans stay in your own browser. <span>❦</span>
       </footer>
+      <HelpGuide open={helpOpen} onClose={() => setHelpOpen(false)} onGoTo={(next) => { setTab(next); setHelpOpen(false); }} />
     </div>
   );
 }
@@ -95,21 +109,23 @@ function TabButton({
   active,
   onClick,
   children,
+  number,
 }: {
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
+  number: string;
 }) {
   return (
     <button
       onClick={onClick}
-      className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition ${
+      className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
         active
           ? "bg-white text-slate-900 shadow-sm ring-1 ring-slate-200"
           : "text-slate-500 hover:text-slate-800"
       }`}
     >
-      {children}
+      <span className="tab-number">{number}</span>{children}
     </button>
   );
 }

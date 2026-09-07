@@ -33,10 +33,10 @@ export default function SetupView({ api }: Props) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="text-xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
-            Courses &amp; groups
+            Pack your course satchel
           </h2>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Add your courses and every group option to choose between.
+            Add every class group you could attend—the planner will choose one of each.
           </p>
         </div>
         <ExportImportButtons api={api} />
@@ -50,7 +50,7 @@ export default function SetupView({ api }: Props) {
       >
         <div className="min-w-[220px] flex-1">
           <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
-            Course name
+            Name of the course
           </label>
           <input
             type="text"
@@ -62,7 +62,7 @@ export default function SetupView({ api }: Props) {
         </div>
         <div>
           <span className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
-            Components
+            What does it include?
           </span>
           <div className="flex gap-2">
             {(["lecture", "exercise", "lab"] as ComponentType[]).map((t) => {
@@ -95,8 +95,9 @@ export default function SetupView({ api }: Props) {
 
       {api.data.courses.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-slate-300 dark:border-slate-600 bg-white/50 p-12 text-center text-slate-400 dark:text-slate-500">
-          No courses yet. Import from USOS above, or add your first course to get
-          started.
+          <div className="mb-3 text-3xl">🌱</div>
+          <strong className="block text-slate-700 dark:text-slate-200">Your satchel is empty</strong>
+          Import your USOS plan above, or add your first course to begin the journey.
         </div>
       ) : (
         <div className="space-y-4">
